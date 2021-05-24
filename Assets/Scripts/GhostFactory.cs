@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GhostFactory : MonoBehaviour
+public class GhostFactory : ScriptableObject
 {
-    public GameObject GetGhost(string typeName)
+
+    public GhostType GetGhost(string typeName)
     {
-        var ghost = Resources.Load(typeName) as GameObject;
-        if (ghost != null)
+        switch (typeName)
         {
-            return ghost;
-        }
-        else
-        {
-            return null;
+            case "RedGhost":
+                RedGhost redGhost = new RedGhost();
+                redGhost.SetGhost();
+                return redGhost;
+            case "BlueGhost":
+                BlueGhost blueGhost = new BlueGhost();
+                blueGhost.SetGhost();
+                return blueGhost;
+            default:
+                return null;
         }
     }
 }

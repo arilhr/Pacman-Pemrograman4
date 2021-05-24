@@ -15,24 +15,14 @@ public class Player : MonoBehaviour
         dest = transform.position;
     }
 
-    private void Update()
-    {
-        PlayerControl();
-    }
-
-    void FixedUpdate()
-    {
-        Move();
-    }
-
-    void Move()
+    public void Move()
     {
         // Move closer to Destination
         Vector2 p = Vector2.MoveTowards(transform.position, dest, moveSpeed);
         playerRb.MovePosition(p);
     }
 
-    private void PlayerControl()
+    public void PlayerControl()
     {
         // Check for Input if not moving
         if ((Vector2)transform.position == dest)

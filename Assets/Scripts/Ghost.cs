@@ -2,25 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ghost : MonoBehaviour
+public class Ghost : MonoBehaviour
 {
-    protected string typeName;
-    protected float speed;
-    public Transform[] waypoints;
+    private GhostType type;
     protected int cur;
 
-    protected void GhostMove()
+    public GhostType Type
+    {
+        get { return type; }
+        set { type = value; }
+    }
+
+    private void Update()
+    {
+        GhostMove();
+    }
+
+    public void GhostMove()
     {
         // Waypoint not reached yet? then move closer
-        if (transform.position != waypoints[cur].position)
+        if (transform.position != type.Waypoints[cur])
         {
             Vector2 p = Vector2.MoveTowards(transform.position,
-                                            waypoints[cur].position,
-                                            speed);
+                                            type.Waypoints[cur],
+                                            type.Speed);
             GetComponent<Rigidbody2D>().MovePosition(p);
         }
 
         // Waypoint reached, select next one
-        else cur = (cur + 1) % waypoints.Length;
+        else cur = (cur + 1) % type.Waypoints.Length;
     }
 }

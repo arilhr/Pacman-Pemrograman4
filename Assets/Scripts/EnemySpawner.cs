@@ -4,26 +4,29 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public GameObject[] ghost;
+    public Transform spawnPos;
     private GhostFactory ghostFactory;
-    public float time;
-    public Transform spawnPosition;
+
 
     private void Start()
     {
         ghostFactory = new GhostFactory();
-        Invoke("SpawnRedGhost", 2f);
-        Invoke("SpawnRedGhost", 5f);
+        Invoke("SpawnRedGhost", 2);
+        Invoke("SpawnBlueGhost", 10);
     }
 
     private void SpawnRedGhost()
     {
-        Instantiate(ghostFactory.GetGhost("RedGhost"), spawnPosition);
+        var ghostObject = Instantiate(ghost[0], spawnPos.position, Quaternion.identity);
+        Ghost g = ghostObject.GetComponent<Ghost>();
+        g.Type = ghostFactory.GetGhost("RedGhost");
     }
 
     private void SpawnBlueGhost()
     {
-        Instantiate(ghostFactory.GetGhost("BlueGhost"), spawnPosition);
+        var ghostObject = Instantiate(ghost[1], spawnPos.position, Quaternion.identity);
+        Ghost g = ghostObject.GetComponent<Ghost>();
+        g.Type = ghostFactory.GetGhost("BlueGhost");
     }
-
-
 }

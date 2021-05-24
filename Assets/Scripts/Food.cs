@@ -8,6 +8,7 @@ public class Food : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            GameManager.DecreaseFood();
             Destroy(this.gameObject);
         }
     }
